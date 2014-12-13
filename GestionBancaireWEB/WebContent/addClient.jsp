@@ -32,7 +32,10 @@
           <tr valign="top">
             <td>Client CIN</td>
             <td>:</td>
-            <td><input type="number" size="8" min="8" name="cin" required="required"></td>
+            <td>
+              <input type="number" size="8" min="8" name="cin" required="required">
+              <div id="cinError" style="color:#F00;font-style:italic"></div>
+            </td>
           </tr>
 					<tr valign="top">
             <td>Client first name</td>
@@ -56,5 +59,34 @@
 			</form>
 		</div>
   </div>
+  <script src="jquery-ui/external/jquery/jquery.js"></script>
+  <script src="jquery-ui/jquery-ui.js"></script>
+  <script type="text/javascript">
+  $(function() {
+	  $("input[name='cin']").change(function(){
+		  var cinInput = $(this);
+		  $.ajax({
+			  type: "POST",
+			  url: "CheckClientCinAvailable",
+			  data: { cin: cinInput.val() },
+			  dataType: "json"
+			}).done(function(data) {
+				$("#cinError").text("");
+				if (data.status == 0) {
+					cinInput.animate({
+						backgroundColor: "#aa0000",
+						color: "#FFFFFF"
+					}, 500);
+					$("#cinError").text(data.msg);
+				} else {
+					cinInput.animate({
+						backgroundColor: "#FFFFFF",
+						color: "#000000",
+					}, 500);
+			  }
+			});
+		});
+  });
+  </script>
 </body>
 </html>
