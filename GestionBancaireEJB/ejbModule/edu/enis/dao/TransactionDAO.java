@@ -15,7 +15,8 @@ public class TransactionDAO implements TransactionDAORemote, TransactionDAOLocal
   public TransactionDAO() {}
 
   public long save(TransactionEntity accountTransaction) {
-    entityManager.persist(accountTransaction);
+    entityManager.persist(entityManager.contains(accountTransaction) ? accountTransaction : entityManager
+        .merge(accountTransaction));
     return accountTransaction.getTransactionId();
   }
 

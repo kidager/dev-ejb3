@@ -1,7 +1,7 @@
 package edu.enis.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,14 +15,14 @@ import javax.persistence.Table;
 public class ClientEntity implements Serializable {
 
   @Id
-  private String                  cin;
+  private String                 cin;
 
-  private String                  firstName;
-  private String                  lastName;
-  private String                  address;
+  private String                 firstName;
+  private String                 lastName;
+  private String                 address;
 
   @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-  private List<BankAccountEntity> accountsList;
+  private Set<BankAccountEntity> accountsList;
 
   public ClientEntity() {}
 
@@ -65,11 +65,11 @@ public class ClientEntity implements Serializable {
     this.address = address;
   }
 
-  public List<BankAccountEntity> getAccountsList() {
+  public Set<BankAccountEntity> getAccountsList() {
     return accountsList;
   }
 
-  public void setAccountsList(List<BankAccountEntity> accountsList) {
+  public void setAccountsList(Set<BankAccountEntity> accountsList) {
     this.accountsList = accountsList;
   }
 

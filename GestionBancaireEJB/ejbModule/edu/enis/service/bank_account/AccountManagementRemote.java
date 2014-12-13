@@ -1,6 +1,7 @@
 package edu.enis.service.bank_account;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.Remote;
 
@@ -40,7 +41,7 @@ public interface AccountManagementRemote {
   public void deleteAccount(BankAccountEntity account);
 
   // Transactions actions
-  public List<TransactionEntity> getAllTransactions(long clientRib);
+  public Set<TransactionEntity> getAllTransactions(long clientRib);
 
   // Common account operations
   public boolean debitMoney(BankAccountEntity account, double amount);

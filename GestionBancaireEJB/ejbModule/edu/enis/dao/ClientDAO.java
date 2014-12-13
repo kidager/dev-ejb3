@@ -17,7 +17,7 @@ public class ClientDAO implements ClientDAORemote, ClientDAOLocal {
   public ClientDAO() {}
 
   public String save(ClientEntity client) {
-    entityManager.persist(client);
+    entityManager.persist(entityManager.contains(client) ? client : entityManager.merge(client));
     return client.getCin();
   }
 

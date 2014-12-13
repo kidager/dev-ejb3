@@ -1,9 +1,10 @@
 package edu.enis.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,15 +20,15 @@ public class BankAccountEntity implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private long                    accountRib;
-  private double                  balance;
+  private long                   accountRib;
+  private double                 balance;
 
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "clientCin", referencedColumnName = "cin")
-  @ManyToOne()
-  private ClientEntity            client;
+  private ClientEntity           client;
 
-  @OneToMany(mappedBy = "bankAccount")
-  private List<TransactionEntity> transactionsList;
+  @OneToMany(mappedBy = "bankAccount", fetch = FetchType.EAGER)
+  private Set<TransactionEntity> transactionsList;
 
   public BankAccountEntity() {}
 
@@ -61,11 +62,11 @@ public class BankAccountEntity implements Serializable {
     this.client = client;
   }
 
-  public List<TransactionEntity> getTransactionsList() {
+  public Set<TransactionEntity> getTransactionsList() {
     return transactionsList;
   }
 
-  public void setTransactionsList(List<TransactionEntity> transactionsList) {
+  public void setTransactionsList(Set<TransactionEntity> transactionsList) {
     this.transactionsList = transactionsList;
   }
 }

@@ -18,7 +18,7 @@ public class BankAccountDAO implements BankAccountDAORemote, BankAccountDAOLocal
   public BankAccountDAO() {}
 
   public long save(BankAccountEntity cb) {
-    entityManager.persist(cb);
+    entityManager.persist(entityManager.contains(cb) ? cb : entityManager.merge(cb));
     return cb.getAccountRib();
   }
 

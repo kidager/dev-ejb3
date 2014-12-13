@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:web="http://java.sun.com/xml/ns/javaee"
+  xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+  version="2.5"
+>
   <welcome-file-list>
     <welcome-file>ListAllAccounts</welcome-file>
     <welcome-file>/index.jsp</welcome-file>
@@ -73,5 +76,25 @@
   <servlet-mapping>
     <servlet-name>DeleteBankAccount</servlet-name>
     <url-pattern>/DeleteBankAccount</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CreditBankAccount</display-name>
+    <servlet-name>CreditBankAccount</servlet-name>
+    <servlet-class>edu.enis.control.bank_account.CreditBankAccount</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreditBankAccount</servlet-name>
+    <url-pattern>/CreditBankAccount</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DebitBankAccount</display-name>
+    <servlet-name>DebitBankAccount</servlet-name>
+    <servlet-class>edu.enis.control.bank_account.DebitBankAccount</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DebitBankAccount</servlet-name>
+    <url-pattern>/DebitBankAccount</url-pattern>
   </servlet-mapping>
 </web-app>

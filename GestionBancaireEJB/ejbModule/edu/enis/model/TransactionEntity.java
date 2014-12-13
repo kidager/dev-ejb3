@@ -30,8 +30,8 @@ public class TransactionEntity implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long              transactionId;
 
-  @JoinColumn(name = "accountRib", referencedColumnName = "accountRib")
   @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "accountRib", referencedColumnName = "accountRib")
   private BankAccountEntity bankAccount;
 
   private Timestamp         date;

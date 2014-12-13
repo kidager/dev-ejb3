@@ -1,7 +1,8 @@
 package edu.enis.service.bank_account;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -45,7 +46,9 @@ public class AccountManagement implements AccountManagementRemote, AccountManage
   }
 
   public boolean debitMoney(BankAccountEntity account, double amount) {
-    if (account == null || account.getBalance() < amount) { return false; }
+    if (account == null || account.getBalance() < amount) {
+      return false;
+    }
     // Debit balance
     account.setBalance(account.getBalance() - amount);
     baDAO.save(account);
@@ -56,7 +59,9 @@ public class AccountManagement implements AccountManagementRemote, AccountManage
   }
 
   public boolean creditMoney(BankAccountEntity account, double amount) {
-    if (account == null) { return false; }
+    if (account == null) {
+      return false;
+    }
     // Credit balance
     account.setBalance(account.getBalance() + amount);
     baDAO.save(account);
@@ -66,9 +71,10 @@ public class AccountManagement implements AccountManagementRemote, AccountManage
     return true;
   }
 
-  public List<TransactionEntity> getAllTransactions(long clientRib) {
+  public Set<TransactionEntity> getAllTransactions(long clientRib) {
     BankAccountEntity ba = baDAO.find(clientRib);
-    if (ba == null) return new ArrayList<TransactionEntity>();
+    if (ba == null)
+      return new HashSet<TransactionEntity>();
     return ba.getTransactionsList();
   }
 
