@@ -1,6 +1,7 @@
 package edu.enis.service.bank_account;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -34,7 +35,8 @@ public class AccountManagement implements AccountManagementRemote, AccountManage
   }
 
   public void deleteClient(String cin) {
-    clientDAO.delete(clientDAO.find(cin));
+    ClientEntity client = clientDAO.find(cin);
+    clientDAO.delete(client);
   }
 
   public List<ClientEntity> getAllClients() {

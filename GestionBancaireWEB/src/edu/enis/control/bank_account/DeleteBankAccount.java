@@ -22,19 +22,17 @@ public class DeleteBankAccount extends HttpServlet {
     String cin = "";
     try {
       rib = Long.parseLong(request.getParameter("rib"));
-      cin = baManager.getAccountByRib(rib).getClient().getCin();
-
       BankAccountEntity ba = baManager.getAccountByRib(rib);
 
+      cin = ba.getClient().getCin();
       baManager.deleteAccount(ba);
 
       response.sendRedirect("ShowClient?cin=" + cin);
     } catch (NullPointerException e) {
-      // ERREUR RIB NON DEFINI
+      e.printStackTrace();
     } catch (NumberFormatException e) {
-      // ERREUR RIB NON VALID
+      e.printStackTrace();
     }
-
   }
 
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

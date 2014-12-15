@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="Content-Type" content="text/html" />
-  <title>Add a new client</title>
+  <title>Edit client <c:out value="${client.cin}" /> </title>
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="icon" type="image/png" href="images/credit-card--plus.png" />
 </head>
@@ -19,10 +19,13 @@
         <li><a href="ListAllAccounts"><span class="icon-bank"></span>
           Main Page
         </a></li>
+        <li><a href="ShowClient?cin=${client.cin}"><span class="icon-bank"></span>
+          Go back to client
+        </a></li>
       </ul>
     </div>
     <div id="content">
-			<form action="AddClient" method="POST">
+			<form action="EditClient" method="POST">
 				<table>
           <c:if test="${not empty requestScope.error}">
             <tr>
@@ -33,27 +36,27 @@
             <td>Client CIN</td>
             <td>:</td>
             <td>
-              <input type="number" size="8" name="cin" required="required">
+              <input type="number" size="8" name="cin" value="${client.cin}" disabled="disabled" required="required">
               <div id="cinError" style="color:#F00;font-style:italic"></div>
             </td>
           </tr>
 					<tr valign="top">
             <td>Client first name</td>
             <td>:</td>
-            <td><input type="text" name="firstName" required="required"></td>
+            <td><input type="text" name="firstName" value="${client.firstName}" required="required"></td>
           </tr>
           <tr valign="top">
             <td>Client last name</td>
             <td>:</td>
-            <td><input type="text" name="lastName" required="required"></td>
+            <td><input type="text" name="lastName" value="${client.lastName}" required="required"></td>
           </tr>
           <tr valign="top">
             <td>Client address</td>
             <td>:</td>
-            <td><textarea name="address" required="required" rows="2"></textarea></td>
+            <td><textarea name="address" required="required" rows="2"><c:out value="${client.address}"/></textarea></td>
           </tr>
 					<tr valign="top">
-						<td colspan="3"><input type="submit" value="Add Client"></td>
+						<td colspan="3"><input type="submit" value="Edit Client"></td>
 					</tr>
 				</table>
 			</form>
@@ -64,27 +67,7 @@
   <script type="text/javascript">
   $(function() {
 	  $("input[name='cin']").change(function(){
-		  var cinInput = $(this);
-		  $.ajax({
-			  type: "POST",
-			  url: "CheckClientCinAvailable",
-			  data: { cin: cinInput.val() },
-			  dataType: "json"
-			}).done(function(data) {
-				$("#cinError").text("");
-				if (data.status == 0) {
-					cinInput.animate({
-						backgroundColor: "#aa0000",
-						color: "#FFFFFF"
-					}, 500);
-					$("#cinError").text(data.msg);
-				} else {
-					cinInput.animate({
-						backgroundColor: "#FFFFFF",
-						color: "#000000",
-					}, 500);
-			  }
-			});
+		  $(this).val("${client.firstName}");
 		});
   });
   </script>

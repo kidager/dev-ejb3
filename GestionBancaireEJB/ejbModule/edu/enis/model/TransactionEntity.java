@@ -44,7 +44,7 @@ public class TransactionEntity implements Serializable {
     this.bankAccount = bankAccount;
     this.type = type;
     this.amount = amount;
-    this.bankAccount.getTransactionsList().add(this);
+    //this.bankAccount.getTransactionsList().add(this);
   }
 
   @PrePersist

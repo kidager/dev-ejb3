@@ -38,7 +38,7 @@
 <body>
 	<div id="page">
 		<div class="title">
-			<h1>Bank Account Management</h1>
+			<h1><a href="ListAllAccounts">Bank Account Management</a></h1>
 		</div>
 		<div id="menu">
 			<ul>

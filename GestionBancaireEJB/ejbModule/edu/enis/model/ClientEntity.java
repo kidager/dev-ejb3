@@ -3,6 +3,7 @@ package edu.enis.model;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -21,7 +22,7 @@ public class ClientEntity implements Serializable {
   private String                 lastName;
   private String                 address;
 
-  @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private Set<BankAccountEntity> accountsList;
 
   public ClientEntity() {}

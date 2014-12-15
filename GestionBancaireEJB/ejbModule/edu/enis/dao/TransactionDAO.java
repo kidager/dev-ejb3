@@ -15,14 +15,16 @@ public class TransactionDAO implements TransactionDAORemote, TransactionDAOLocal
   public TransactionDAO() {}
 
   public long save(TransactionEntity accountTransaction) {
-    entityManager.persist(entityManager.contains(accountTransaction) ? accountTransaction : entityManager
-        .merge(accountTransaction));
+    entityManager.persist(entityManager.merge(accountTransaction));
+    entityManager.flush();
     return accountTransaction.getTransactionId();
   }
 
   public void delete(TransactionEntity accountTransaction) {
-    entityManager.remove(entityManager.contains(accountTransaction) ? accountTransaction : entityManager
-        .merge(accountTransaction));
+    accountTransaction = entityManager.merge(accountTransaction);
+    accountTransaction.getBankAccount().getTransactionsList().remove(accountTransaction);
+    entityManager.remove(accountTransaction);
+    entityManager.flush();
   }
 
   public TransactionEntity find(long transactionPK) {

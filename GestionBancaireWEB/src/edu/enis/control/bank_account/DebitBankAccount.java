@@ -49,12 +49,18 @@ public class DebitBankAccount extends HttpServlet {
     }
 
     BankAccountEntity ba = baManager.getAccountByRib(rib);
-    baManager.debitMoney(ba, amount);
+    if (baManager.debitMoney(ba, amount)) {
+      response.getWriter().println("{"
+          + "\"status\":1,"
+          + "\"msg\":\"Debited " + amount + " TND from account " + rib + "\","
+          + "\"balance\":" + baManager.getAccountByRib(rib).getBalance()
+          + "}");
+    } else {
+      response.getWriter().println("{"
+          + "\"status\":0,"
+          + "\"msg\":\"Not enough balance [Remaining:" + ba.getBalance() + " TND]\""
+          + "}");
+    }
 
-    response.getWriter().println("{"
-        + "\"status\":1,"
-        + "\"msg\":\"Debited " + amount + " TND from account " + rib + "\","
-        + "\"balance\":" + baManager.getAccountByRib(rib).getBalance()
-        + "}");
   }
 }

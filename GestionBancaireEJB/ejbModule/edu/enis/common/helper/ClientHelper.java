@@ -17,6 +17,8 @@ public class ClientHelper {
   }
 
   public static List<ClientDTO> modelListToDTOList(List<ClientEntity> listE) {
+    if (listE == null)
+      return null;
     List<ClientDTO> list = new ArrayList<ClientDTO>();
     for (ClientEntity cl : listE) {
       list.add(modelToDTO(cl));
@@ -25,6 +27,8 @@ public class ClientHelper {
   }
 
   public static List<ClientEntity> dtoListToModelList(List<ClientDTO> listDTO) {
+    if (listDTO == null)
+      return null;
     List<ClientEntity> list = new ArrayList<ClientEntity>();
     for (ClientDTO cl : listDTO) {
       list.add(dtoToModel(cl));

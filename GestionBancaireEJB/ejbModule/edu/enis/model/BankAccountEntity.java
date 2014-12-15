@@ -3,6 +3,7 @@ package edu.enis.model;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,7 +28,7 @@ public class BankAccountEntity implements Serializable {
   @JoinColumn(name = "clientCin", referencedColumnName = "cin")
   private ClientEntity           client;
 
-  @OneToMany(mappedBy = "bankAccount", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "bankAccount", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private Set<TransactionEntity> transactionsList;
 
   public BankAccountEntity() {}
@@ -35,7 +36,7 @@ public class BankAccountEntity implements Serializable {
   public BankAccountEntity(ClientEntity client, double balance) {
     this.client = client;
     this.balance = balance;
-    this.client.getAccountsList().add(this);
+    //this.client.getAccountsList().add(this);
   }
 
   public long getAccountRib() {
