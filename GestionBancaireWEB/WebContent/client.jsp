@@ -149,9 +149,9 @@ form#addAmountForm {
 
     $.extend({
       amountDialog: function (title, formUrl, ribId) {
-        $('<div><form id="amountForm">'
-          + '<label for="amountValue">Amount : </label>'
-          + '<input type="number" id="amountValue" name="amount" required="required">'
+        $('<div style="text-align:center"><form id="addAmountForm">'
+          + '<label style="width:20%" for="amountValue">Amount : </label>'
+          + '<input type="number" id="amountValue" name="amount" style="width:80%" required="required">'
           + '</form></div>')
         .dialog({
           modal: true,
@@ -240,10 +240,11 @@ form#addAmountForm {
 
     $("a#deleteAccount").click(function (event) {
       event.preventDefault();
+      var line = $(this);
       $("<div></div>").dialog({
         buttons: {
           "Yes": function () {
-            window.location = $("a#deleteAccount").first().attr("href");
+            window.location = line.attr("href");
             $(this).dialog("close");
           },
           "No": function () {
