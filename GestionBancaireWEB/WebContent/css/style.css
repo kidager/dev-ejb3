@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
 a:link, a:visited, a:hover, a:active {
-    color: #4A58DD;
+  color: #4A58DD;
 	font-weight: normal;
 	text-decoration: none;
 	font-style: normal
@@ -61,6 +61,11 @@ span[class^="icon-"], span[class*=" icon-"] {
     padding: 0px;
     margin: 0px;
   }
+  h1 a:link, h1 a:visited, h1 a:hover, h1 a:active {
+    color: #FFFFFF;
+    font-style: normal;
+    font-weight: bold;
+  }  
 
 #menu {
   width: 100%;

@@ -56,7 +56,7 @@ public class AddClient extends HttpServlet {
     if (request.getAttribute("error") != null) {
       request.getRequestDispatcher("/addClient.jsp").forward(request, response);
     } else {
-      response.sendRedirect("/ListAllAccounts");
+      response.sendRedirect("ListAllAccounts");
     }
 
   }

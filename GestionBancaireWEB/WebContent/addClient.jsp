@@ -33,7 +33,7 @@
             <td>Client CIN</td>
             <td>:</td>
             <td>
-              <input type="number" size="8" name="cin" required="required">
+              <input type="text" size="8" name="cin" required="required">
               <div id="cinError" style="color:#F00;font-style:italic"></div>
             </td>
           </tr>

@@ -27,7 +27,7 @@ public class EditClient extends HttpServlet {
     String address = "";
 
     try {
-      cin = request.getParameter("firstName");
+      cin = request.getParameter("cin");
       firstName = request.getParameter("firstName");
       lastName = request.getParameter("lastName");
       address = request.getParameter("address");
@@ -39,29 +39,30 @@ public class EditClient extends HttpServlet {
       if (address.trim().length() < 3)
         throw new InvalidNameException(address);
 
+      try {
+        ClientEntity client = baManager.getClientByCin(cin);
+        client.setFirstName(firstName);
+        client.setLastName(lastName);
+        client.setAddress(address);
+        baManager.updateClient(client);
+
+        request.setAttribute("msg", "Client [CIN:" + cin + "] edited successfully : " + firstName +
+            " " + lastName);
+      } catch (Exception e) {
+        e.printStackTrace();
+        request.setAttribute("error", "Error! " + e.getClass().getCanonicalName());
+      }
+
     } catch (NullPointerException e) {
       request.setAttribute("error", "All the parameters must be set!");
     } catch (InvalidNameException e) {
       request.setAttribute("error", e.getMessage());
     }
 
-    try {
-      ClientEntity client = baManager.getClientByCin(cin);
-      client.setFirstName(firstName);
-      client.setLastName(lastName);
-      client.setAddress(address);
-
-      request.setAttribute("msg", "Client [CIN:" + cin + "] edited successfully : " + firstName +
-          " " + lastName);
-    } catch (Exception e) {
-      e.printStackTrace();
-      request.setAttribute("error", "Error!");
-    }
-
     if (request.getAttribute("error") != null) {
       request.getRequestDispatcher("/editClient.jsp").forward(request, response);
     } else {
-      response.sendRedirect("/ShowClient?cin=" + cin);
+      response.sendRedirect("ShowClient?cin=" + cin);
     }
 
   }

@@ -29,7 +29,10 @@ public class ClientDAO implements ClientDAORemote, ClientDAOLocal {
   }
 
   public ClientEntity find(String cin) {
-    return entityManager.find(ClientEntity.class, cin);
+    System.err.println("CIN:" + cin);
+    ClientEntity client = entityManager.find(ClientEntity.class, cin);
+    entityManager.flush();
+    return client;
   }
 
   @SuppressWarnings("unchecked")
