@@ -21,6 +21,19 @@ span[class^="icon-"], span[class*=" icon-"] {
    vertical-align: middle;
 }
 
+
+.icon-user {
+  background:url(../images/user.png) left top;
+}
+
+.icon-user-minus {
+  background:url(../images/user-minus.png) left top;
+}
+
+.icon-user-plus {
+  background:url(../images/user-plus.png) left top;
+}
+
 .icon-plus {
    background:url(../images/credit-card--plus.png) left top; 
 }

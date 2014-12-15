@@ -63,7 +63,7 @@ form#addAmountForm {
 			</ul>
 			<ul class="right">
 				<li><a id="deleteClient" href="DeleteClient?cin=${client.cin}"><span
-						class="icon-delete"></span> Delete client </a></li>
+						class="icon-user-minus"></span> Delete client </a></li>
 			</ul>
 		</div>
 		<div id="content">
@@ -72,6 +72,15 @@ form#addAmountForm {
 					<c:out value="${requestScope.msg}" />
 				</div>
 			</c:if>
+			<table>
+       <tbody>
+         <tr style="background-color:#87BAF5">
+           <td style="text-align:center"><strong>CIN : <c:out value="${client.cin}"/></strong></td>
+           <td style="text-align:center"><strong><c:out value="${client.firstName}"/> <c:out value="${client.lastName}"/></strong></td>
+           <td style="text-align:center"><strong><c:out value="${client.address}"/></strong></td>
+         </tr>
+       </tbody>
+			</table>
 			<table>
 				<thead>
 					<tr>

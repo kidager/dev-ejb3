@@ -8,6 +8,12 @@
   <title>Edit client <c:out value="${client.cin}" /> </title>
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="icon" type="image/png" href="images/credit-card--plus.png" />
+  <style type="text/css">
+    input[readonly] {
+      background-color: #777777;
+      color: #FFFFFF;
+    }
+  </style>
 </head>
 <body>
   <div id="page">
@@ -19,7 +25,7 @@
         <li><a href="ListAllAccounts"><span class="icon-bank"></span>
           Main Page
         </a></li>
-        <li><a href="ShowClient?cin=${client.cin}"><span class="icon-bank"></span>
+        <li><a href="ShowClient?cin=${client.cin}"><span class="icon-user"></span>
           Go back to client
         </a></li>
       </ul>

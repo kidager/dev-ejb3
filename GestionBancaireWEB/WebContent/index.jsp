@@ -42,7 +42,7 @@
 		</div>
 		<div id="menu">
 			<ul>
-        <li><a href="AddClient"><span class="icon-bank-plus"></span>
+        <li><a href="AddClient"><span class="icon-user-plus"></span>
           Add new client
         </a></li>
         <li><a href="DownloadAsExcelFile"><span class="icon-excel"></span>

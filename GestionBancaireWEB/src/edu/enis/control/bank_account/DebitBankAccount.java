@@ -58,7 +58,8 @@ public class DebitBankAccount extends HttpServlet {
     } else {
       response.getWriter().println("{"
           + "\"status\":0,"
-          + "\"msg\":\"Not enough balance [Remaining:" + ba.getBalance() + " TND]\""
+          + "\"msg\":\"Not enough balance [Remaining:" + ba.getBalance() + " TND]\","
+          + "\"balance\":" + baManager.getAccountByRib(rib).getBalance()
           + "}");
     }
 
