@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:web="http://java.sun.com/xml/ns/javaee"
-  xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-  version="2.5"
->
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:web="http://java.sun.com/xml/ns/javaee" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <welcome-file-list>
     <welcome-file>ListAllAccounts</welcome-file>
     <welcome-file>/index.jsp</welcome-file>
@@ -17,7 +14,6 @@
     <servlet-name>AddClient</servlet-name>
     <url-pattern>/AddClient</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <description></description>
     <display-name>EditClient</display-name>
@@ -28,7 +24,6 @@
     <servlet-name>EditClient</servlet-name>
     <url-pattern>/EditClient</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <description></description>
     <display-name>ListAllAccounts</display-name>
@@ -118,5 +113,15 @@
   <servlet-mapping>
     <servlet-name>CheckClientCinAvailable</servlet-name>
     <url-pattern>/CheckClientCinAvailable</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetTransactionsList</display-name>
+    <servlet-name>GetTransactionsList</servlet-name>
+    <servlet-class>edu.enis.control.bank_account.GetTransactionsList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetTransactionsList</servlet-name>
+    <url-pattern>/GetTransactionsList</url-pattern>
   </servlet-mapping>
 </web-app>

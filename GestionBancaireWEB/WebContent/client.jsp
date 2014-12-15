@@ -94,7 +94,7 @@ form#addAmountForm {
 					<c:choose>
 						<c:when test="${not empty requestScope.accountList}">
 							<c:forEach items="${requestScope.accountList}" var="account">
-								<tr>
+								<tr id="accountLine" style="cursor:pointer">
 									<td><c:out value="${account.accountRib}" /></td>
 									<td><c:out value="${account.balance}" /> TND</td>
 									<td style="text-align: center;"><a id="dialog-debit"
@@ -130,8 +130,9 @@ form#addAmountForm {
   $(function () {
     // Init $.alert addon
     $.extend({
-      alert: function (message, title) {
-        $("<div></div>").dialog({
+      alert: function (message, title, width) {
+        width = (typeof width === "undefined") ? 400 : width;
+        $("<div>"+message+"</div>").dialog({
           buttons: {
             "OK": function () {
               $(this).dialog("close");
@@ -142,8 +143,9 @@ form#addAmountForm {
           },
           resizable: false,
           title: title,
+          width: 500,
           modal: true
-        }).text(message);
+        });
       }
     });
 
@@ -238,6 +240,27 @@ form#addAmountForm {
       }).text("Do you really want to delete this client and all his accounts ?");
     });
 
+
+    $("tr#accountLine td").click(function(event) {
+      if(event.target == this) {
+        event.preventDefault();
+        var ribId = $(this).parent().find("td").first().text();
+
+        $.ajax({
+          type: "GET",
+          url: "GetTransactionsList",
+          data: { rib: ribId },
+          dataType: "json"
+        }).done(function (data) {
+          if (data.status == 1) {
+            $.alert(data.msg, "Account " + ribId + " details", 600);
+          } else {
+            $.alert("Error loading transactions list for account " + ribId, "Error");
+          }
+        });
+      }
+    });
+    
     $("a#deleteAccount").click(function (event) {
       event.preventDefault();
       var line = $(this);
