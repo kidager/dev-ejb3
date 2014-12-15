@@ -106,7 +106,7 @@ form#addAmountForm {
 										href="#EditBankAccount?rib=${account.accountRib}"> <span
 											class="icon-plus"></span>
 									</a></td>
-									<td style="text-align: center;"><a
+									<td style="text-align: center;"><a id="deleteAccount"
 										href="DeleteBankAccount?rib=${account.accountRib}"> <span
 											class="icon-delete"></span>
 									</a></td>
@@ -127,183 +127,138 @@ form#addAmountForm {
 	<script src="jquery-ui/external/jquery/jquery.js"></script>
 	<script src="jquery-ui/jquery-ui.js"></script>
 	<script>
-		$(function() {
-			// Init $.alert addon
-			$.extend({
-				alert : function(message, title) {
-					$("<div></div>").dialog({
-						buttons : {
-							"OK" : function() {
-								$(this).dialog("close");
-							}
-						},
-						close : function(event, ui) {
-							$(this).remove();
-						},
-						resizable : false,
-						title : title,
-						modal : true
-					}).text(message);
-				}
-			});
+  $(function () {
+    // Init $.alert addon
+    $.extend({
+      alert: function (message, title) {
+        $("<div></div>").dialog({
+          buttons: {
+            "OK": function () {
+              $(this).dialog("close");
+            }
+          },
+          close: function (event, ui) {
+            $(this).remove();
+          },
+          resizable: false,
+          title: title,
+          modal: true
+        }).text(message);
+      }
+    });
 
-			$
-					.extend({
-						amountDialog : function(title, formUrl, ribId) {
-							$(
-									'<div><form id="amountForm">'
-											+ '<label for="amountValue">Amount : </label>'
-											+ '<input type="number" id="amountValue" name="amount" required="required">'
-											+ '</form></div>')
-									.dialog(
-											{
-												modal : true,
-												resizable : false,
-												width : 500,
-												title : title,
-												show : {
-													effect : "puff"
-												},
-												buttons : [
-														{
-															text : "OK",
-															click : function() {
-																amount = $(
-																		"#amountValue")
-																		.val();
-																if (amount == ""
-																		|| amount <= 0) {
-																	$(this)
-																			.effect(
-																					"shake");
-																	$
-																			.alert("Please enter a positive amount");
-																	return;
-																}
+    $.extend({
+      amountDialog: function (title, formUrl, ribId) {
+        $('<div><form id="amountForm">'
+          + '<label for="amountValue">Amount : </label>'
+          + '<input type="number" id="amountValue" name="amount" required="required">'
+          + '</form></div>')
+        .dialog({
+          modal: true,
+          resizable: false,
+          width: 500,
+          title: title,
+          show: {effect: "puff"},
+          buttons: [{
+            text: "OK",
+            click: function () {
+              amount = $("#amountValue").val();
+              
+              if (amount == "" || amount <= 0) {
+                $(this).effect("shake");
+                $.alert("Please enter a positive amount");
+                return;
+              }
 
-																if (ribId === undefined
-																		|| ribId == null
-																		|| ribId == "") {
-																	$(this)
-																			.effect(
-																					"shake");
-																	$
-																			.alert("RIB is not valid !");
-																	return;
-																}
+              if (ribId === undefined || ribId == null || ribId == "") {
+                $(this).effect("shake");
+                $.alert("RIB is not valid !");
+                return;
+              }
 
-																$
-																		.ajax(
-																				{
-																					type : "POST",
-																					url : formUrl,
-																					data : {
-																						amount : amount,
-																						rib : ribId
-																					},
-																					dataType : "json"
-																				})
-																		.done(
-																				function(
-																						data) {
-																					$(
-																							"a[id^='dialog-'][data-rib='"
-																									+ ribId
-																									+ "']")
-																							.parent()
-																							.parent()
-																							.find(
-																									"td:nth-child(2)")
-																							.text(
-																									data.balance
-																											+ " TND");
-																					$
-																							.alert(
-																									data.msg,
-																									"Account "
-																											+ ribId
-																											+ " edited");
-																				});
+              $.ajax({
+                type: "POST",
+                url: formUrl,
+                data: { amount: amount, rib: ribId },
+                dataType: "json"
+              }).done(function (data) {
+                $("a[id^='dialog-'][data-rib='" + ribId + "']").parent().parent()
+                  .find("td:nth-child(2)").text(data.balance + " TND");
+                $.alert(data.msg, "Account " + ribId + " edited");
+              });
+              $(this).dialog("close");
+            }
+          }, {
+            text: "Cancel",
+            click: function () {
+              $(this).effect("explode");
+              $(this).dialog("close");
+            }
+          }],
+          close: function (event, ui) {
+            $(this).remove();
+          },
+          open: function (event, ui) {
+            $("form#amountForm").submit(function(event) {
+              event.preventDefault();
+            });
+          }
+        })
+      }
+    });
 
-																$(this)
-																		.dialog(
-																				"close");
-															}
-														},
-														{
-															text : "Cancel",
-															click : function() {
-																$(this)
-																		.effect(
-																				"explode");
-																$(this)
-																		.dialog(
-																				"close");
-															}
-														} ],
-												close : function(event, ui) {
-													$(this).remove();
-												},
-												open : function(event, ui) {
-													$("form#amountForm")
-															.submit(
-																	function(
-																			event) {
-																		event
-																				.preventDefault();
-																	});
-												}
-											})
-						}
-					});
+    $("a#dialog-credit").click(function (event) {
+      event.preventDefault();
+      $.amountDialog("Credit amount", "CreditBankAccount", $(this).data("rib"));
+    });
 
-			$("a#dialog-credit").click(
-					function(event) {
-						event.preventDefault();
-						$.amountDialog("Credit amount", "CreditBankAccount", $(
-								this).data("rib"));
-					});
+    $("a#dialog-debit").click(function (event) {
+      event.preventDefault();
+      $.amountDialog("Debit amount", "DebitBankAccount", $(this).data("rib"));
+    });
 
-			$("a#dialog-debit").click(
-					function(event) {
-						event.preventDefault();
-						$.amountDialog("Debit amount", "DebitBankAccount", $(
-								this).data("rib"));
-					});
+    $("a#deleteClient").click(function (event) {
+      event.preventDefault();
+      $("<div></div>").dialog({
+        buttons: {
+          "Yes": function () {
+            window.location = $("a#deleteClient").first().attr("href");
+            $(this).dialog("close");
+          },
+          "No": function () {
+            $(this).dialog("close");
+          }
+        },
+        close: function (event, ui) {
+          $(this).remove();
+        },
+        resizable: false,
+        title: "Delete client",
+        modal: true
+      }).text("Do you really want to delete this client and all his accounts ?");
+    });
 
-			$("a#deleteClient")
-					.click(
-							function(event) {
-								event.preventDefault();
-								$("<div></div>")
-										.dialog(
-												{
-													buttons : {
-														"Yes" : function() {
-															window.location = $(
-																	"a#deleteClient")
-																	.first()
-																	.attr(
-																			"href");
-															$(this).dialog(
-																	"close");
-														},
-														"No" : function() {
-															$(this).dialog(
-																	"close");
-														}
-													},
-													close : function(event, ui) {
-														$(this).remove();
-													},
-													resizable : false,
-													title : "Delete",
-													modal : true
-												})
-										.text(
-												"Do you really want to delete this client and all his accounts ?");
-							});
-		});
+    $("a#deleteAccount").click(function (event) {
+      event.preventDefault();
+      $("<div></div>").dialog({
+        buttons: {
+          "Yes": function () {
+            window.location = $("a#deleteAccount").first().attr("href");
+            $(this).dialog("close");
+          },
+          "No": function () {
+            $(this).dialog("close");
+          }
+        },
+        close: function (event, ui) {
+          $(this).remove();
+        },
+        resizable: false,
+        title: "Delete account",
+        modal: true
+      }).text("Do you really want to delete this account ?");
+    });
+  });
 	</script>
 
 </body>
