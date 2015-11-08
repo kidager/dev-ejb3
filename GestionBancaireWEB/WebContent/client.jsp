@@ -131,7 +131,9 @@ form#addAmountForm {
     // Init $.alert addon
     $.extend({
       alert: function (message, title, width) {
-        width = (typeof width === "undefined") ? 400 : width;
+        title = (typeof title === "undefined") ? "Message" : title;
+        width = (typeof width === "undefined") ? 400       : width;
+        
         $("<div>"+message+"</div>").dialog({
           buttons: {
             "OK": function () {
@@ -142,8 +144,9 @@ form#addAmountForm {
             $(this).remove();
           },
           resizable: false,
+          autoOpen: true,
           title: title,
-          width: 500,
+          width: width,
           modal: true
         });
       }
@@ -151,11 +154,22 @@ form#addAmountForm {
 
     $.extend({
       amountDialog: function (title, formUrl, ribId) {
+        var myDialog = null;
         $('<div style="text-align:center"><form id="addAmountForm">'
           + '<label style="width:20%" for="amountValue">Amount : </label>'
           + '<input type="number" id="amountValue" name="amount" style="width:80%" required="required">'
           + '</form></div>')
         .dialog({
+          open: function (event, ui) {
+            myDialog = $(this);
+            $("form#addAmountForm").submit(function(event) {
+              event.preventDefault();
+              $("#sendFormButton").click();
+            });
+          },
+          close: function (event, ui) {
+            $(this).remove();
+          },
           modal: true,
           resizable: false,
           width: 500,
@@ -163,18 +177,21 @@ form#addAmountForm {
           show: {effect: "puff"},
           buttons: [{
             text: "OK",
+            "id": "sendFormButton",
             click: function () {
               amount = $("#amountValue").val();
               
               if (amount == "" || amount <= 0) {
-                $(this).effect("shake");
-                $.alert("Please enter a positive amount");
+                //myDialog.effect("shake");
+                $(".ui-dialog").effect("shake");
+                $.alert("Please enter a positive amount", "Error", 300);
                 return;
               }
 
               if (ribId === undefined || ribId == null || ribId == "") {
-                $(this).effect("shake");
-                $.alert("RIB is not valid !");
+                //myDialog.effect("shake");
+                $(".ui-dialog").effect("shake");
+                $.alert("RIB is not valid !", "Error", 300);
                 return;
               }
 
@@ -193,18 +210,10 @@ form#addAmountForm {
           }, {
             text: "Cancel",
             click: function () {
-              $(this).effect("explode");
+              myDialog.effect("explode");
               $(this).dialog("close");
             }
-          }],
-          close: function (event, ui) {
-            $(this).remove();
-          },
-          open: function (event, ui) {
-            $("form#amountForm").submit(function(event) {
-              event.preventDefault();
-            });
-          }
+          }]
         })
       }
     });
